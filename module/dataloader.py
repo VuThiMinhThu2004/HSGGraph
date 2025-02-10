@@ -431,7 +431,14 @@ class LoadHiExampleSet(torch.utils.data.Dataset):
         logger.info("[INFO] Start loading %s", self.data_root)
 
     def __getitem__(self, index):
-        graph_file = os.
+        graph_file = os.path.join(self.data_root, "%d.graph.bin" % index)
+        g, label_dict = load_graphs(graph_file)
+        # print(graph_file)
+        return g[0], index
+
+    def __len__(self):
+        return len(self.gfiles)
+    
 class Example(object):
     """Class representing a train/val/test example for single-document extractive summarization."""
 
