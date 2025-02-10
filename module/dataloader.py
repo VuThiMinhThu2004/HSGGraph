@@ -232,7 +232,8 @@ class ExampleSet(torch.utils.data.Dataset):
             edge:
                 word2sent, sent2word:  tffrac=int, dtype=0
         """
-        G = dgl.DGLGraph()
+        #G = dgl.DGLGraph()
+        G = dgl.graph(([], []))
         wid2nid, nid2wid = self.AddWordNode(G, input_pad)
         w_nodes = len(nid2wid)
 
@@ -345,7 +346,8 @@ class MultiExampleSet(ExampleSet):
                 sent2doc: dtype=2
         """
         # add word nodes
-        G = dgl.DGLGraph()
+        #G = dgl.DGLGraph()
+        G = dgl.graph(([], []))
         wid2nid, nid2wid = self.AddWordNode(G, sent_pad)
         w_nodes = len(nid2wid)
 
@@ -618,7 +620,9 @@ class ExampleSet(torch.utils.data.Dataset):
             edge:
                 word2sent, sent2word:  tffrac=int, dtype=0
         """
-        G = dgl.DGLGraph()
+        #G = dgl.DGLGraph()
+        G = dgl.graph(([], []))
+                
         wid2nid, nid2wid = self.AddWordNode(G, input_pad)
         w_nodes = len(nid2wid)
 
@@ -731,7 +735,9 @@ class MultiExampleSet(ExampleSet):
                 sent2doc: dtype=2
         """
         # add word nodes
-        G = dgl.DGLGraph()
+        #G = dgl.DGLGraph()
+        G = dgl.graph(([], []))
+        
         wid2nid, nid2wid = self.AddWordNode(G, sent_pad)
         w_nodes = len(nid2wid)
 
@@ -769,6 +775,9 @@ class MultiExampleSet(ExampleSet):
             docid = sent2doc[i]
             docnid = docid2nid[docid]
             G.add_edge(sent_nid, docnid, data={"tffrac": torch.LongTensor([0]), "dtype": torch.Tensor([2])})
+        #thu check
+        for u, v, data in G.edges(data=True):
+            print(u, v, data)
 
         # add doc edges
         for i in range(article_num):
